@@ -1,0 +1,28 @@
+{
+  "name": "dynamic-throttle",
+  "version": "1.0.0",
+  "description": "Redis-backed dynamic rate limiting",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles"
+  },
+  "keywords": [
+    "dynamic",
+    "throttle",
+    "rate",
+    "limit",
+    "limitting",
+    "redis"
+  ],
+  "author": "Anthony Mugendi <ngurumugz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "human-interval": "^0.1.6",
+    "moment": "^2.22.1",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "async": "^2.6.1",
+    "jest": "^23.0.1"
+  }
+}
