@@ -1,10 +1,13 @@
 var Throttle = require('.'),
+    redis = require('redis'),
     async = require('async');
 
-    
-var throttler = Throttle({}),
+
+var throttler = Throttle({
+        // redisClient: redis.createClient()
+    }),
     key = 'test key',
-    tokens = 500,
+    tokens = 5,
     window = 'minute';
 
 

@@ -37,18 +37,46 @@ const Throttle = require('dynamic-throttle'),
 
 ```
 
-## API
+
 
 ## Initialization
 The first step is to initialize your rate limiter. Unlike other limiters, this process exists mostly to help you properly initialize your Redis instance.
 
 ```javascript
-
-    Throttle({
-        redisClient :  redis.createClient() // a redis instance
+    Throttle({        
+        redisClient :  redis.createClient(),
+        maxAbuseRate : 5 //default = 5
     })
-
 ```
+
+- **redisClient:** a Redis instance defaults to a Redis client initialized with: {host: '127.0.0.1', port: 6379, db: 2}
+- **maxAbuseRate:** the rate past which users who exceed rate limits become temporarily banned from the system. If the ***window*** was set to **1 minute** then users who continually abuse the system past the **maxAbuseRate** are banned/rate limited for ```window duration * 10 * abuseRate```
+
+## Responses
+Both ```then(fn)``` and ```catch(fn)``` functions return responses as shown below:
+
+### ```.then(fn)```
+When we still have tokens...
+```JSON
+{ 
+    message: "You are within your rate limit.",
+    expiry: "2018-05-30T11:09:31.169Z",
+    tokensRemaining: 485 
+}
+```
+
+### ```.catch(fn)```
+When the user has exceeded their limit...
+```JSON
+{ 
+    message: "You have exceeded your rate limit! Please stop abusing this system or get banned for longer!",
+    tokensExceeded: -14,
+    abuseRate: 1.4,
+    bannedTill: "2018-05-30T11:28:04.432Z" 
+}
+```
+
+## API
 
 
 ### ```.throttle(key, tokens, window)```
@@ -66,7 +94,7 @@ Use this function if you need to immediately (hard) reset tokens for any key.
 However, if you would like the changes to apply immediately, use **.reset()**.
 
 ### ```.quit()```
-Quit the redis session and close all connections. Normally, you would only call this if exiting application.
+Quit the Redis session and close all connections. Normally, you would only call this if exiting application.
 
 
 
