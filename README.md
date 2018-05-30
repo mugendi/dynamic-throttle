@@ -39,6 +39,18 @@ const Throttle = require('dynamic-throttle'),
 
 ## API
 
+## Initialization
+The first step is to initialize your rate limiter. Unlike other limiters, this process exists mostly to help you properly initialize your Redis instance.
+
+```javascript
+
+    Throttle({
+        redisClient :  redis.createClient() // a redis instance
+    })
+
+```
+
+
 ### ```.throttle(key, tokens, window)```
 This is the main method, and likely the only you will use.
 

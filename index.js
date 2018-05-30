@@ -5,12 +5,18 @@ const redis = require('redis'),
     DRL = function (opts) {
         let self = this;
 
-        let redis_opts = opts.redis || {
+        let client = opts.redisClient || redis.createClient(
+            {
                 host: '127.0.0.1',
                 port: 6379,
                 db: 2
-            },
-            client = redis.createClient(redis_opts);
+            }
+        );
+
+
+        if(client.constructor.name !== 'RedisClient'){
+            throw new Error("redisClient passed not created using the 'redis' module!")
+        }
 
 
         self = Object.assign(self, {
